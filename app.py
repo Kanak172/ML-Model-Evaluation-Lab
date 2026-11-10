@@ -4,14 +4,16 @@ import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import StandardScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+from sklearn.compose import ColumnTransformer
+from sklearn.preprocessing import StandardScaler, OneHotEncoder
 from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix
 
 st.set_page_config(page_title="ML Model Evaluation Lab", layout="wide")
 
-st.title("📊 ML Model Evaluation Lab")
+st.title("🏆 ML Model Evaluation Lab")
 st.markdown("Comparing Machine Learning Models for Customer Churn Prediction")
 
 @st.cache_resource
@@ -20,36 +22,44 @@ def load_and_train_models():
     
     if 'customerID' in df.columns:
         df = df.drop(columns=['customerID'])
-
+        
     if 'TotalCharges' in df.columns:
         df['TotalCharges'] = pd.to_numeric(df['TotalCharges'], errors='coerce')
         df['TotalCharges'] = df['TotalCharges'].fillna(df['TotalCharges'].median())
-
-    for col in df.select_dtypes(include=['object']).columns:
-        if col != 'Churn':
-            df[col] = LabelEncoder().fit_transform(df[col])
-
+        
     if 'Churn' in df.columns:
-        df['Churn'] = df['Churn'].apply(lambda x: 1 if str(x).strip().lower() in ['yes', '1', 'true'] else 0)
-
+        df['Churn'] = df['Churn'].apply(lambda x: 1 if str(x).strip().lower() in {'yes', '1', 'true'} else 0)
+        
     X = df.drop(columns=['Churn'])
     y = df['Churn']
+    
+    numeric_features = X.select_dtypes(include=['int64', 'float64']).columns
+    categorical_features = X.select_dtypes(include=['object', 'category']).columns
 
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+    X_train, X_test, y_train, y_test = train_test_split(
+        X, y, test_size=0.2, random_state=42, stratify=y
+    )
 
-    scaler = StandardScaler()
-    X_train_scaled = scaler.fit_transform(X_train)
-    X_test_scaled = scaler.transform(X_test)
+    preprocessor = ColumnTransformer(
+        transformers=[
+            ('num', StandardScaler(), numeric_features),
+            ('cat', OneHotEncoder(handle_unknown='ignore'), categorical_features)
+        ]
+    )
 
     models = {
-        "Logistic Regression": LogisticRegression(random_state=42),
+        "Logistic Regression": LogisticRegression(max_iter=1000, random_state=42),
         "Random Forest": RandomForestClassifier(random_state=42)
     }
 
     results = {}
     for name, model in models.items():
-        model.fit(X_train_scaled, y_train)
-        y_pred = model.predict(X_test_scaled)
+        clf = Pipeline(steps=[
+            ('preprocessor', preprocessor),
+            ('classifier', model)
+        ])
+        clf.fit(X_train, y_train)
+        y_pred = clf.predict(X_test)
         
         results[name] = {
             "accuracy": accuracy_score(y_test, y_pred),
