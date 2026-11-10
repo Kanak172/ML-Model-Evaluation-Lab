@@ -26,8 +26,7 @@ for col in df.select_dtypes(include=['object']).columns:
 
 # Encode target variable (Churn: Yes/No)
 if 'Churn' in df.columns:
-    df['Churn'] = df['Churn'].apply(lambda x: 1 if str(x).strip().lower() in ['yes', '1', 'true'] else 0)
-
+df['Churn'] = df['Churn'].apply(lambda x: 1 if str(x).strip().lower() in {'yes', '1', 'true'} else 0)
 # Define features (X) and target (y)
 X = df.drop(columns=['Churn'])
 y = df['Churn']
