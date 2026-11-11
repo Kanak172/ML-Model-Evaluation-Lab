@@ -1,11 +1,17 @@
 # ML Model Evaluation Lab
 
-An end-to-end machine learning project for customer churn prediction featuring data preprocessing, model evaluation (Logistic Regression & Random Forest), and an interactive Streamlit dashboard.
+A professional, leakage-safe machine learning evaluation pipeline and interactive Streamlit dashboard for Customer Churn Prediction.
 
-## Dataset
-- **Source:** Customer Churn dataset located in `data/churn.csv`.
-- **Features:** Includes customer demographics, account information, and service usage metrics.
-- **Target:** `Churn` (Binary: Yes/No, mapped to 1/0 during preprocessing).
+## 🛠️ Tech Stack
+- **Python 3.13**
+- **Scikit-Learn** (Pipelines, ColumnTransformers, Metrics)
+- **Streamlit** (Interactive Dashboard)
+- **Pandas & NumPy** (Data Processing)
+- **Matplotlib & Seaborn** (Visualizations)
 
-## Setup Instructions
-1. Clone the repository:
+## 🚀 Getting Started
+
+1. **Clone the Repository:**
+   ```bash
+   git clone [https://github.com/Kanak172/ML-Model-Evaluation-Lab.git](https://github.com/Kanak172/ML-Model-Evaluation-Lab.git)
+   cd ML-Model-Evaluation-Lab
