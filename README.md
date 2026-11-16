@@ -1,17 +1,21 @@
-# ML Model Evaluation Lab
+# 📊 ML Model Evaluation Lab
 
-A professional, leakage-safe machine learning evaluation pipeline and interactive Streamlit dashboard for Customer Churn Prediction.
+An intermediate machine learning project demonstrating dataset preprocessing, model training, performance evaluation, and an interactive dashboard interface.
 
-## 🛠️ Tech Stack
-- **Python 3.13**
-- **Scikit-Learn** (Pipelines, ColumnTransformers, Metrics)
-- **Streamlit** (Interactive Dashboard)
-- **Pandas & NumPy** (Data Processing)
-- **Matplotlib & Seaborn** (Visualizations)
+## 🚀 Features
+* **Dataset Loading & Preprocessing:** Handles data cleaning, missing value imputation, and label encoding on customer churn data.
+* **Model Training:** Trains and compares multiple classification models (Logistic Regression and Random Forest).
+* **Performance Metrics:** Evaluates Accuracy, Precision, Recall, F1-Score, and Confusion Matrices.
+* **Interactive Dashboard:** Built with Streamlit for clean visual comparisons.
 
-## 🚀 Getting Started
+## 🛠️ Technology Stack
+* **Python** (Pandas, NumPy, Scikit-learn, Matplotlib, Seaborn)
+* **Streamlit** (Dashboard Interface)
+* **Git & GitHub** (Version Control)
 
-1. **Clone the Repository:**
+## ⚙️ Installation & Running locally
+
+1. Clone the repository:
    ```bash
    git clone [https://github.com/Kanak172/ML-Model-Evaluation-Lab.git](https://github.com/Kanak172/ML-Model-Evaluation-Lab.git)
    cd ML-Model-Evaluation-Lab
